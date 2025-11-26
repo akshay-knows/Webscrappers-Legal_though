@@ -1,46 +1,16 @@
-                              🧠 XKCD WEB SCRAPER
-                                      |
-        ------------------------------------------------------------------
-        |                           |                                   |
-   🛠 Imports                 🗂 Folder Setup                      🏁 Initial Setup
-        |                           |                                   |
-   - bs4 → BeautifulSoup       - os.makedirs("comics")          - url = "https://xkcd.com/1"
-   - requests → rq             - exist_ok=True                  - base_url ="https://xkcd.com/"
-   - os                                                            - print welcome message
-                                                                   - input() prompt
-        |
-        |
-        --------------------------- 🌀 MAIN LOOP ----------------------------
-                                      while "#" not in url
-        |
-        |--------------- PART 1: REQUEST PAGE ------------------
-        |          - rq.get(url)
-        |          - response.content
-        |
-        |--------------- PART 2: PARSE HTML --------------------
-        |          - soup = BeautifulSoup(response)
-        |          - Find comic image:
-        |               soup.select("#comic img")[0]
-        |          - Extract src:
-        |               img_src = element["src"]
-        |
-        |--------------- PART 3: DOWNLOAD IMAGE ----------------
-        |          - Extract filename:
-        |               img_name = img_src.split("/")[-1]
-        |          - Build full URL:
-        |               img_url = "http:" + img_src
-        |          - rq.get(img_url)
-        |          - Save file:
-        |               open("comics/"+img_name, "wb")
-        |          - print("Image Downloaded")
-        |
-        |--------------- PART 4: GO TO NEXT PAGE ---------------
-        |          - Find next button:
-        |               soup.select(".comicNav a[rel='next']")[0]
-        |          - Extract href:
-        |               next_href = next_a["href"]
-        |          - Build next URL:
-        |               url = base_url + next_href
-        |          - print next URL
-        |
-        ------------------------ LOOP REPEATS -------------------------
+# XKCD Comic Scraper (Python)
+
+A lightweight script that downloads the entire XKCD archive by visiting each comic page, extracting the comic image, and saving it locally.
+
+How it works
+- Starts at the very first XKCD comic and iterates forward using the page's "Next" link.
+- Fetches each comic page with HTTP requests.
+- Parses HTML with BeautifulSoup to locate the #comic element and extract the image URL.
+- Normalizes/builds the full image URL and downloads the image file.
+- Creates a local comics/ folder in the current directory.
+- Repeats until no next comic is found.
+
+Key points
+- Requires: Python, requests, beautifulsoup4.
+- Output: images saved in comics/ for offline viewing.
+
