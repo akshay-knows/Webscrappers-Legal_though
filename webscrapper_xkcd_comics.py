@@ -1,9 +1,10 @@
+
 from bs4 import BeautifulSoup as bs
 import requests as rq
 import os
 os.system("cls")
 
-print("Hi from 'xkcd.com'\n 🐦‍🔥 This is an open source webscrapping project.\n🐦‍🔥 Images will be saved in comics folder.")
+print("Hi from 'xkcd.com'\n\n※ This is an open source webscrapping project.\n\n※ Images will be saved in comics folder.\nPS: No robots.txt harmed !!")
 input("\nPress Any Key to continue")
 url = "https://xkcd.com/1"
 base_url = "https://xkcd.com/"
@@ -11,6 +12,8 @@ base_url = "https://xkcd.com/"
 # making folder
 
 os.makedirs("comics", exist_ok=True)
+print(f"Redirecting to {base_url}")
+
 
 while "#" not in url:
     #part1-requesting webpage
@@ -31,10 +34,11 @@ while "#" not in url:
     response = rq.get(img_url)
     with open("comics/" + img_name,"wb") as f:
         f.write(response.content)
-        print("---Image Downloaded---")
+        print("Image Downloaded ✅")
 
     # part 4 - going to next page
-    next_a = soup.select(".comicNav a[rel='next']")[0]
-    next_href = next_a["href"]
+    next_a = soup.select(".comicNav a[rel='next']")[0] #css selector
+    next_href = next_a["href"] #next page
     url = base_url + next_href
     print("Next Url ↪-- ",url)
+  
